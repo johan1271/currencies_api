@@ -5,7 +5,7 @@ import 'package:currencies_api/Provider/curriencies_provider.dart';
 import 'package:currencies_api/Models/value_models.dart';
 
 class MyHomeApp extends StatefulWidget {
-  MyHomeApp({Key? key}) : super(key: key);
+  const MyHomeApp({Key? key}) : super(key: key);
 
   
 
@@ -14,9 +14,10 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomeApp> {
-  late Future<List<String>> _listCurrencies;
-  late Value _value;
+  late Future<Map<String,dynamic>> _listCurrencies;
   
+  late Value _value;
+  late CountriesCurrencies _countriesCurrencies;
 
   @override
   void initState() {
@@ -24,10 +25,12 @@ class _MyHomePageState extends State<MyHomeApp> {
 
     super.initState();
     final currenciesProvider = CurrenciesProvider();
+    
     print("hola");
     _listCurrencies = currenciesProvider.getCurrencyList();
     //print(_listCurrencies);
     _value = Value("AUD","USD");
+    
     
     print(_value.getValueFrom);
     
@@ -35,13 +38,13 @@ class _MyHomePageState extends State<MyHomeApp> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<String>>(
-
+    return FutureBuilder<Map<String,dynamic>>(
+          
           future: _listCurrencies,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print("llegue aca");
-              return customDropDown(snapshot.data as List<String>, _value.getValueFrom, (val) {
+              print("llegue aca snapshop data");
+              return customDropDown(snapshot.data as Map<String,dynamic>, _value.getValueFrom, (val) {
                 setState(() {
                   
                   _value.setValueFrom = val;

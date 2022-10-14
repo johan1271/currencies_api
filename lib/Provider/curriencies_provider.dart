@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class CurrenciesProvider {
 
   
-
+  
   final String _url = "https://api.frankfurter.app/currencies";
   
   
@@ -18,34 +18,41 @@ class CurrenciesProvider {
     return currencies;
   }
 
+  
 
-  Future _getFlag(String flag) async {
-    final response = await http.get(Uri.parse("https://countryflagsapi.com/png/$flag"));
-    final decodedData = json.decode(response.body);
-    return decodedData;
-  }
+
+  
   
   
   
 
-  Future<List<String>> getCurrencyList() async {
+  Future<Map<String,dynamic>> getCurrencyList() async {
     final response = await http.get(Uri.parse(_url));
     
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);
       
       final jsonData = jsonDecode(body) ;
-
+      print("llegue aca");
       Map<String, dynamic> map = jsonData;
-      
-      List<String> currencies = map.keys.toList();
-      
+      print(map);
+      //List<String> currencies = map.keys.toList();
       //print(currencies);
       
-
       
+      final countriesC = CountriesCurrencies.From(map);
+      print(countriesC.countriesCurrencies);
+      print("hola key");
+      print("estas son las keys $countriesC.countriesCurrencies.keys");
+      // countriesC.countriesCurrencies.forEach((key, value) {
+      //   print("esta es la key $key");
+      //   print(value);
+      // }); 
       
-      return currencies;
+      print("retorno esto $countriesC.countriesCurrencies"); 
+      //print(currencies);
+      
+      return countriesC.countriesCurrencies;
     } else {
       throw Exception("Ocurrio Algo ${response.statusCode}");
     }

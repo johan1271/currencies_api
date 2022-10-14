@@ -16,16 +16,19 @@ class FlagCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        width: 500,
+        height: 200,
         decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(10)),
+        color: Colors.white, borderRadius: BorderRadius.circular(20)),
         
         
         child: Stack(children: [
           
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(1.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const [
@@ -36,6 +39,19 @@ class FlagCard extends StatelessWidget {
                   ], 
                 ),
               ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 53),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text("0 AUD", style: TextStyle(color: Colors.black, fontSize: 25)),
+                    Text("0 USD", style: TextStyle(color: Colors.black, fontSize: 25))
+                  ],
+                ),
+              )
+
+
               
               
 

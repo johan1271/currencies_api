@@ -17,9 +17,32 @@ class Currencies {
   }
 }
 
-
-
+class CountriesCurrencies{
+  Map<String,dynamic> countriesCurrencies = {};
   
+
+  CountriesCurrencies();
+  
+
+
+  CountriesCurrencies.From(Map<String,dynamic> countriesCurrencies){
+    print("llego aca");
+    // countriesCurrencies.forEach((key, value) {
+    //   this.countriesCurrencies[key] = value;
+    // });
+
+    List<dynamic> countries = ["Australia","Bulgaria","Brazil","Canada","Switzerland","China","Czechia","Denmark","Eur", "The United Kingdom Of Great Britain And Northern Ireland", "Hong Kong", "Croatia","Hungary","Indonesia", "Israel","India","Iceland","Japan","South Korea","Mexico","Malaysia","Norway","New Zealand","Philippines","Poland","Romania","Sweden","Singapore","Thailand","Turkey","United States Of America","South Africa"];
+  
+    this.countriesCurrencies.forEach((key, value) {
+      this.countriesCurrencies[key] = countries[countriesCurrencies.values.toList().indexOf(value)];
+      
+    });
+
+    
+    
+  }
+
+}
 
 
 class CurrenciesList {
@@ -30,12 +53,9 @@ class CurrenciesList {
   CurrenciesList.fromJsonList(List<dynamic> jsonList) {
     if (jsonList == null) return;
     
-    print("llegue aca");
+    
     currencies = jsonList.map((item) => Currencies.fromJsonMap(item)).toList();
-    print(currencies);
-    // for (var item in jsonList) {
-    //   final currencie = Currencies.fromJsonMap(item);
-    //   currencies.add(currencie);
-    // }
+    
+    
   }
 }

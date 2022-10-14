@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-Widget customDropDown(List<String> currencies, String value, void onChanged(val)) {
-  
+Widget customDropDown(Map<String,dynamic> currencies, String value, void onChanged(val)) {
+  print("leggue al combo");
+  List<String> currenciesList = currencies.keys.toList();
+  print(currenciesList);
   return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+
+    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+    alignment: Alignment.center,
     height: 40,
-    width: 84,
+    width: 100,
     decoration: BoxDecoration(
 
         borderRadius: BorderRadius.circular(20),
@@ -25,7 +29,7 @@ Widget customDropDown(List<String> currencies, String value, void onChanged(val)
       onChanged: (String? val) {
         onChanged(val);
       },
-      items: currencies.map<DropdownMenuItem<String>>((String value) {
+      items: currenciesList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

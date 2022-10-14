@@ -3,6 +3,8 @@ import 'package:currencies_api/Pages/home_page.dart';
 import "package:currencies_api/Widgets/container_white.dart";
 import 'package:currencies_api/Widgets/first_stack.dart';
 import 'package:currencies_api/Widgets/convert_card.dart';
+import 'package:currencies_api/Widgets/exchange_card.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -18,7 +20,8 @@ class HomeScreen extends StatelessWidget {
             
             Text("Currency Converter", style: TextStyle(color: Colors.white, fontSize: 30)),
             
-            Expanded(flex: 1, child: FlagCard()),
+            FlagCard(),
+            ExchangeRate(),
             Expanded(flex: 2, child: ConvertCard()),
             //Expanded(flex: 1, child: Image.network("https://countryflagsapi.com/png/usa")),
             
