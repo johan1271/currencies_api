@@ -2,11 +2,12 @@ import 'package:currencies_api/Widgets/dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:currencies_api/Models/curriencies_models.dart';
 import 'package:currencies_api/Provider/curriencies_provider.dart';
+import 'package:currencies_api/Models/value_models.dart';
 
 class MyHomeApp extends StatefulWidget {
-  MyHomeApp({Key? key, required this.title}) : super(key: key);
+  MyHomeApp({Key? key}) : super(key: key);
 
-  final String title;
+  
 
   @override
   State<MyHomeApp> createState() => _MyHomePageState();
@@ -14,8 +15,8 @@ class MyHomeApp extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomeApp> {
   late Future<List<String>> _listCurrencies;
-  late String _valueFrom;
-  late String _valueTo;
+  late Value _value;
+  
 
   @override
   void initState() {
@@ -26,37 +27,27 @@ class _MyHomePageState extends State<MyHomeApp> {
     print("hola");
     _listCurrencies = currenciesProvider.getCurrencyList();
     //print(_listCurrencies);
-    _valueFrom = "AUD";
-    _valueTo = "USD";
+    _value = Value("AUD","USD");
+    
+    print(_value.getValueFrom);
     
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: FutureBuilder<List<String>>(
+    return FutureBuilder<List<String>>(
 
           future: _listCurrencies,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  customDropDown(snapshot.data as List<String>, _valueFrom, (val) {
-                    setState(() {
-                      _valueFrom = val;
-                    });
-                  }),
-                  customDropDown(snapshot.data as List<String>, _valueTo, (val) {
-                    setState(() {
-                      _valueTo = val;
-                    });
-                  }),
-                ],
-              );
+              print("llegue aca");
+              return customDropDown(snapshot.data as List<String>, _value.getValueFrom, (val) {
+                setState(() {
+                  
+                  _value.setValueFrom = val;
+                  
+                });
+              });
                       
             } else if (snapshot.hasError) {
               throw Exception("Ocurrio Algo ${snapshot.error}");
@@ -66,8 +57,11 @@ class _MyHomePageState extends State<MyHomeApp> {
           },
           
           
-        ),);// This trailing comma makes auto-formatting nicer for build methods.
+        );// This trailing comma makes auto-formatting nicer for build methods.
         
   }
+
+
+  
 
 }

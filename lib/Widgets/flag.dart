@@ -7,11 +7,13 @@ class Flag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 70,
+      height: 70,
       decoration: ShapeDecoration(
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           image: DecorationImage(
               image: NetworkImage("https://countryflagsapi.com/png/$flag"),
-              fit: BoxFit.fill)),
+              fit: BoxFit.cover)),
     );
   }
 }

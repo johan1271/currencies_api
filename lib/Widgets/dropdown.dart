@@ -14,7 +14,7 @@ Widget customDropDown(List<String> currencies, String value, void onChanged(val)
     child: DropdownButton<String>(
       
       value: value,
-      icon: const Icon(Icons.arrow_drop_down),
+      icon: const Icon(Icons.arrow_drop_down, color: Colors.black, size: 20),
       iconSize: 24,
       elevation: 16,
       underline: Container(
