@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+//Flag widget is a widget that displays the flag of a country currency
+//Flag takes one argument: [flag] which is the flag of the country
+//Flag is used in the home page
 class Flag extends StatelessWidget {
-  final String? flag;
-  const Flag({Key? key, this.flag}) : super(key: key);
+  final String flag;
+  const Flag({Key? key, required this.flag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,3 +20,7 @@ class Flag extends StatelessWidget {
     );
   }
 }
+
+
+
+

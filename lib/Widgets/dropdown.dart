@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+
+//create a custom dropdown widget that takes a list of items, value and onChanged function as arguments
 Widget customDropDown(Map<String,dynamic> currencies, String value, void onChanged(val)) {
-  print("leggue al combo");
+  
+  //create a list that will contain the list of keys from the currencies map
   List<String> currenciesList = currencies.keys.toList();
-  print(currenciesList);
+  
   return Container(
 
     padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -26,9 +29,13 @@ Widget customDropDown(Map<String,dynamic> currencies, String value, void onChang
         color: Colors.transparent,
       ),
       style: const TextStyle(color: Color.fromARGB(255, 17, 16, 16), fontSize: 18, ),
+
+      //fuction onchanged updates the value of the dropdown
       onChanged: (String? val) {
         onChanged(val);
       },
+
+      //create a list of dropdown menu items from the currencies list
       items: currenciesList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,

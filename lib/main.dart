@@ -3,6 +3,6 @@ import 'package:flutter/material.dart';
 import "package:currencies_api/my_app.dart";
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 

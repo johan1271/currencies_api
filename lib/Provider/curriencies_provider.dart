@@ -3,63 +3,74 @@ import 'package:currencies_api/Models/curriencies_models.dart';
 import 'package:http/http.dart' as http;
 
 class CurrenciesProvider {
+  final String _url = "https://api.frankfurter.app/";
 
   
-  
-  final String _url = "https://api.frankfurter.app/currencies";
-  
-  
+  //https://api.frankfurter.app/latest?amount=1&from=USD&to=EUR
+  //getConvertCurrencies is a function that fetches the convertion between two currencies and returns a Future<Currencies>
 
-  Future<Currencies> getConvertCurrencies(double amount, String currency1, String currency2) async {
-    final String url2 = "https://api.frankfurter.app/latest?amount=$amount&from=$currency1&to=$currency2";
-    final response = await http.get(Uri.parse(url2));
-    final decodedData = json.decode(response.body);
-    final currencies = Currencies.fromJsonMap(decodedData);
-    return currencies;
+  Future<Currencies> getConvertCurrencies(
+      num amount, String currency1, String currency2) async {
+    
+
+    final response = await http.get(
+        Uri.parse("${_url}latest?amount=$amount&from=$currency1&to=$currency2"));
+    if (response.statusCode == 200) {
+      String body = utf8.decode(response.bodyBytes);
+
+      
+      final decodedData = jsonDecode(body);
+
+      final currencies = Currencies.fromJsonMap(decodedData);
+
+      //return the currencies object
+      return currencies;
+    } else {
+      throw Exception("Ocurrio algo ${response.statusCode}");
+    }
   }
 
-  
+  //get rates of a currency and returns a Future<Currencies>
+  //https://api.frankfurter.app/latest?from=USD
+  Future<Currencies> getRates(String from) async {
+    final String url = "https://api.frankfurter.app/latest?from=$from";
+
+    final response = await http.get(Uri.parse("${_url}latest?from=$from"));
+    if (response.statusCode == 200) {
+      String body = utf8.decode(response.bodyBytes);
+
+      final decodedData = jsonDecode(body);
+
+      //create a currency object with the rates
+      final currencies = Currencies.fromJsonMap(decodedData);
+      
+      //return the currency object with the rates
+      return currencies;
+    } else {
+      throw Exception("Ocurrio algo ${response.statusCode}");
+    }
+  }
 
 
-  
-  
-  
-  
+  //get a map of currencies and returns a Future<Map<String, dynamic>>
+  //https://api.frankfurter.app/currencies
+  Future<Map<String, dynamic>> getCurrencyList() async {
 
-  Future<Map<String,dynamic>> getCurrencyList() async {
-    final response = await http.get(Uri.parse(_url));
+
+    final response = await http.get(Uri.parse("${_url}currencies"));
     
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);
-      
-      final jsonData = jsonDecode(body) ;
-      print("llegue aca");
-      Map<String, dynamic> map = jsonData;
-      print(map);
-      //List<String> currencies = map.keys.toList();
-      //print(currencies);
-      
-      
-      final countriesC = CountriesCurrencies.From(map);
-      print(countriesC.countriesCurrencies);
-      print("hola key");
-      print("estas son las keys $countriesC.countriesCurrencies.keys");
-      // countriesC.countriesCurrencies.forEach((key, value) {
-      //   print("esta es la key $key");
-      //   print(value);
-      // }); 
-      
-      print("retorno esto $countriesC.countriesCurrencies"); 
-      //print(currencies);
-      
+
+      final jsonData = jsonDecode(body);
+
+      //create a countriesCurrencies object
+      final countriesC = CountriesCurrencies.fromJsonMap(jsonData);
+
+      //return a map of the countriesCurrencies object
       return countriesC.countriesCurrencies;
     } else {
       throw Exception("Ocurrio Algo ${response.statusCode}");
     }
-      
-    
-    
   }
-
-  
 }
