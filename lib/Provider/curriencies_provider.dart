@@ -1,14 +1,18 @@
 import 'dart:convert';
 import 'package:currencies_api/Models/curriencies_models.dart';
+import "package:currencies_api/Models/countries_currecies.dart";
 import 'package:http/http.dart' as http;
 
+
+//CurrenciesProvider is a class that provides the data of the currencies
+//CurrenciesProvider fetches the data from the api and returns it
 class CurrenciesProvider {
+
+  //Base url
   final String _url = "https://api.frankfurter.app/";
 
-  
   //https://api.frankfurter.app/latest?amount=1&from=USD&to=EUR
   //getConvertCurrencies is a function that fetches the convertion between two currencies and returns a Future<Currencies>
-
   Future<Currencies> getConvertCurrencies(
       num amount, String currency1, String currency2) async {
     
@@ -30,11 +34,11 @@ class CurrenciesProvider {
     }
   }
 
+
   //get rates of a currency and returns a Future<Currencies>
   //https://api.frankfurter.app/latest?from=USD
   Future<Currencies> getRates(String from) async {
-    final String url = "https://api.frankfurter.app/latest?from=$from";
-
+    
     final response = await http.get(Uri.parse("${_url}latest?from=$from"));
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);

@@ -1,7 +1,6 @@
 import 'package:currencies_api/Widgets/convert_card.dart';
 import 'package:currencies_api/Widgets/dropdown.dart';
 import 'package:flutter/material.dart';
-
 import 'package:currencies_api/Models/curriencies_models.dart';
 import 'package:currencies_api/Provider/curriencies_provider.dart';
 import "package:currencies_api/Widgets/flag_card.dart";
@@ -9,7 +8,7 @@ import 'package:currencies_api/Widgets/exchange_card.dart';
 import 'package:flutter/services.dart';
 
 //HomeScreen is the main page of the app
-//HomeScreen displays currency flags, dropdowns, and a convert button 
+//HomeScreen displays currency flags, dropdowns,  convert button , exchange rates , convertion result and amount to be converted
 //HomeScreen 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,9 +20,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> {
 
   late Future<Map<String, dynamic>> _mapCurrencies;
-  late Future<Currencies> _currencieData;
   late Future<Currencies> _curriencesRates;
-  late Future<Currencies> _currencieData2;
+  late Future<Currencies> _currencieData;
 
   late String _rates;
   late Currencies _currencie;
@@ -55,19 +53,18 @@ class _HomeScreen extends State<HomeScreen> {
     //initialize the _rates variable
     _rates = "0";
 
-    //fetch the convertion between two currencies
-    _currencieData = currenciesProvider.getConvertCurrencies(1, "AUD", "USD");
+    
     
 
     //fetch the rates of the currency
-    _currencieData2 = currenciesProvider.getRates("AUD");
+    _currencieData = currenciesProvider.getRates("AUD");
 
     //initialize the amount
     _amount = 0;
 
 
     //initialize the currencies object
-    _currencie = Currencies(_amount, "AUD", "USD", {});
+    _currencie = Currencies(_amount, "AUD", "2022-10-18", {});
 
     //initialize the currencies rates object
     _curriencesRates = currenciesProvider.getRates("AUD");
@@ -109,8 +106,8 @@ class _HomeScreen extends State<HomeScreen> {
     final currenciesProvider = CurrenciesProvider();
 
     //fetch the rates of the currency
-    _currencieData2 = currenciesProvider.getRates(nameFrom);
-    var response = _currencieData2;
+    _currencieData = currenciesProvider.getRates(nameFrom);
+    var response = _currencieData;
     setState(() {
       //set the rates of the currency in a future object
       _curriencesRates = response;
@@ -171,14 +168,24 @@ class _HomeScreen extends State<HomeScreen> {
     return FutureBuilder<Map<String, dynamic>>(
       future: _mapCurrencies,
       builder: (context, snapshot) {
+
+        //create a map of the currencies
         Map<String, dynamic>? map = snapshot.data;
         if (snapshot.hasData) {
 
           // return a flag card widget
+          //send the parameters to the flag card widget
           return FlagCard(
+            //takes the flag of both currency, from and to
             flags: [map![_from], map[_to]],
+
+            //takes the symbol of both currency, from and to
             symbol: [_from, _to],
+
+            //takes rates of the currency verify if the rates is not null
             to: _currencie.rates[_to].toString()=='null' ? _rates : _currencie.rates[_to].toString(),
+
+            //takes amount to convert
             amount: _amount.toString(),
           );
         } else {
@@ -193,11 +200,19 @@ class _HomeScreen extends State<HomeScreen> {
     return FutureBuilder<Currencies>(
       future: _curriencesRates,
       builder: (context, snapshot) {
+
+        //create a currencies object
         Currencies? currenciesData2 = snapshot.data;
         if (snapshot.hasData) {
           return ExchangeRateCard(
+
+              //takes the rates of the currency
               rate: _from != _to ? currenciesData2!.rates[_to].toString() : "1",
+
+              //takes the symbol of the currency to convert
               from: _from,
+
+              //takes the symbol of the currency to be converted
               to: _to);
         } else {
           return const CircularProgressIndicator();

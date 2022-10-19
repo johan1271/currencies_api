@@ -21,48 +21,53 @@ class ConvertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: 350,
-        height: 300,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(20)),
-        child: Stack(children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text("From",
-                        style: TextStyle(color: Colors.black, fontSize: 30)),
-                    dropdown1,
-                  ],
-                ),
-              ),
+    
+    return Container(
+      width: 350,
+      height: 300,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(20)),
+      child: Stack(children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("From",
+                      style: TextStyle(color: Colors.black, fontSize: 30)),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text("To",
-                        style: TextStyle(color: Colors.black, fontSize: 30)),
-                    dropdown2,
-                  ],
-                ),
+                  //show dropdown of the country to be converted
+                  dropdown1,
+                ],
               ),
-              textfield,
-              buttonConvert
+            ),
 
-            ],
-          )
-        ]),
-      ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("To",
+                      style: TextStyle(color: Colors.black, fontSize: 30)),
+
+                  //show dropdown of the country to be converted to
+                  dropdown2,
+                ],
+              ),
+            ),
+
+            //show textfield to enter the amount to be converted
+            textfield,
+
+            //show button to convert the amount
+            buttonConvert
+
+          ],
+        )
+      ]),
     );
   }
 }
